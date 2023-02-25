@@ -16,7 +16,15 @@ async function run() {
     try {
         const fitnessCollection = client.db('onlineFitness').collection('trainings');
 
-        // to get all data
+        // to get limited data from mongodb
+        app.get('/fit', async (req, res) => {
+            const query = {};
+            const cursor = fitnessCollection.find(query).limit(3);
+            const fitness = await cursor.toArray();
+            res.send(fitness);
+        });
+
+        // to get all data from mongodb
         app.get('/fitness', async (req, res) => {
             const query = {};
             const cursor = fitnessCollection.find(query);
