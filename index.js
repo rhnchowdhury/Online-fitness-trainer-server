@@ -14,7 +14,16 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 async function run() {
     try {
-        const serviceCollection = client.db('onlineFitness').collection('services');
+        const fitnessCollection = client.db('onlineFitness').collection('trainings');
+
+        // to get all data
+        app.get('/fitness', async (req, res) => {
+            const query = {};
+            const cursor = fitnessCollection.find(query);
+            const trainings = await cursor.toArray();
+            res.send(trainings);
+        })
+
     }
     finally {
 
