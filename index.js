@@ -16,6 +16,7 @@ async function run() {
     try {
 
         const fitnessCollection = client.db('onlineFitness').collection('trainings');
+        const reviewCollection = client.db('onlineFitness').collection('reviews');
 
         // to get limited data from mongodb
         app.get('/fit', async (req, res) => {
@@ -40,6 +41,13 @@ async function run() {
             trainingsId = await fitnessCollection.findOne(query);
             res.send(trainingsId);
         });
+
+        // created reviews data
+        app.post('/reviews', async (req, res) => {
+            const review = req.body;
+            const result = await reviewCollection.insertOne(review);
+            res.send(result);
+        })
 
     }
     finally {
