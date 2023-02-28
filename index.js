@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express();
 const port = process.env.PORT || 5000;
@@ -71,14 +72,14 @@ async function run() {
             res.send(result);
         });
 
-        // to crete added API
+        // to crete added data
         app.post('/add', async (req, res) => {
             const add = req.body;
             const result = await addCollection.insertOne(add);
             res.send(result);
         });
 
-        // to get added API
+        // to get added data
         app.get('/add', async (req, res) => {
             let query = {};
             if (req.query.email) {
